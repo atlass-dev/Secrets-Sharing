@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Secrets_Sharing.DAL.Interfaces;
 using Secrets_Sharing.Models;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace Secrets_Sharing.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IUserRepository _userRepository;
         private readonly ILogger<HomeController> _logger;
 
         public HomeController(ILogger<HomeController> logger)
