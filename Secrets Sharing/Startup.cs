@@ -7,6 +7,8 @@ using Microsoft.Extensions.Hosting;
 using Secrets_Sharing.DAL;
 using Secrets_Sharing.DAL.Interfaces;
 using Secrets_Sharing.DAL.Repositories;
+using Secrets_Sharing.FileService.Implementations;
+using Secrets_Sharing.FileService.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +32,8 @@ namespace Secrets_Sharing
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("Default")));
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IResourceRepository, ResourceRepository>();
+            services.AddScoped<IFileService, FileServiceImplementation>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

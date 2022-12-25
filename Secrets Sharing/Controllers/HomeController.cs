@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Secrets_Sharing.DAL.Interfaces;
+using Secrets_Sharing.FileService.Interfaces;
 using Secrets_Sharing.Models;
 using System;
 using System.Collections.Generic;
@@ -12,17 +14,29 @@ namespace Secrets_Sharing.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IFileService _fileService;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IFileService fileService)
         {
             _logger = logger;
+            _fileService = fileService;
         }
 
         public IActionResult Index()
         {
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddFile(IFormFile uploadedFile)
+        {
+            if (uploadedFile != null)
+            {
+                await _fileService.LoadFile(uploadedFile);
+            }
+
+            return NotFound();
         }
 
         public IActionResult Privacy()
