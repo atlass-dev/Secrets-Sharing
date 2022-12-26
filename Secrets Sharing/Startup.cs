@@ -9,6 +9,8 @@ using Secrets_Sharing.DAL.Interfaces;
 using Secrets_Sharing.DAL.Repositories;
 using Secrets_Sharing.FileService.Implementations;
 using Secrets_Sharing.FileService.Interfaces;
+using Secrets_Sharing.Hasher.Implementations;
+using Secrets_Sharing.Hasher.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +35,7 @@ namespace Secrets_Sharing
                 options.UseSqlServer(Configuration.GetConnectionString("Default")));
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IResourceRepository, ResourceRepository>();
+            services.AddScoped<IHasher, MD5Hasher>();
             services.AddScoped<IFileService, FileServiceImplementation>();
         }
 

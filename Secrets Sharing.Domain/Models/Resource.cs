@@ -1,4 +1,5 @@
 ﻿using Secrets_Sharing.Domain.Enums;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Secrets_Sharing.Domain.Models
 {
@@ -9,5 +10,8 @@ namespace Secrets_Sharing.Domain.Models
         public string Hash { get; set; }       
         public ResourceType Type { get; set; }
         public string Path { get; set; }
+
+        public int UserId { get; set; }
+        public User User { get; set; }
     }
 }

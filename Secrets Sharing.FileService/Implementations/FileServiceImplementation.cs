@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Secrets_Sharing.DAL.Interfaces;
 using Secrets_Sharing.Domain.Models;
 using Secrets_Sharing.FileService.Interfaces;
+using Secrets_Sharing.Hasher.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,7 +19,8 @@ namespace Secrets_Sharing.FileService.Implementations
         private readonly IResourceRepository _resourceRepository;
         private readonly IWebHostEnvironment _webHostEnviroment;
 
-        public FileServiceImplementation(IResourceRepository resourceRepository, IWebHostEnvironment webHostEnvironment)
+        public FileServiceImplementation(IResourceRepository resourceRepository, 
+            IWebHostEnvironment webHostEnvironment)
         {
             _resourceRepository = resourceRepository;
             _webHostEnviroment = webHostEnvironment;
@@ -39,7 +41,6 @@ namespace Secrets_Sharing.FileService.Implementations
             File file = new File()
             {
                 Name = uploadedFile.FileName,
-                Hash = "123", // TODO: Add hashing
                 Path = _webHostEnviroment.WebRootPath + path,
                 Type = Domain.Enums.ResourceType.File
             };

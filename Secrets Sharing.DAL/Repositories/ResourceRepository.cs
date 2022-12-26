@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Secrets_Sharing.DAL.Interfaces;
 using Secrets_Sharing.Domain.Models;
+using Secrets_Sharing.Hasher.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,12 @@ namespace Secrets_Sharing.DAL.Repositories
     public class ResourceRepository : IResourceRepository
     {
         private readonly ApplicationDbContext _context;
+        private readonly IHasher _hasher;
 
-        public ResourceRepository(ApplicationDbContext context)
+        public ResourceRepository(ApplicationDbContext context, IHasher hasher)
         {
             _context = context;
+            _hasher = hasher;
         }
 
         public async Task<bool> Create(Resource entity)
