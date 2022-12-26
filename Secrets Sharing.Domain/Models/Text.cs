@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Secrets_Sharing.Domain.Models
 {
-    internal class Text : Resource
+    public class Text : Resource
     {
         public string Value { get; set; }
     }

@@ -26,10 +26,17 @@ namespace Secrets_Sharing.DAL.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Hash")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Path")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Type")
@@ -43,6 +50,8 @@ namespace Secrets_Sharing.DAL.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Resources");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Resource");
                 });
 
             modelBuilder.Entity("Secrets_Sharing.Domain.Models.User", b =>
@@ -61,6 +70,23 @@ namespace Secrets_Sharing.DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Secrets_Sharing.Domain.Models.File", b =>
+                {
+                    b.HasBaseType("Secrets_Sharing.Domain.Models.Resource");
+
+                    b.HasDiscriminator().HasValue("File");
+                });
+
+            modelBuilder.Entity("Secrets_Sharing.Domain.Models.Text", b =>
+                {
+                    b.HasBaseType("Secrets_Sharing.Domain.Models.Resource");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasDiscriminator().HasValue("Text");
                 });
 
             modelBuilder.Entity("Secrets_Sharing.Domain.Models.Resource", b =>

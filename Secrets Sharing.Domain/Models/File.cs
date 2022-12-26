@@ -2,6 +2,5 @@
 {
     public class File : Resource
     {
-        public string Path { get; set; }
     }
 }

@@ -16,5 +16,7 @@ namespace Secrets_Sharing.DAL
 
         public DbSet<User> Users { get; set; }
         public DbSet<Resource> Resources { get; set; }
+        public DbSet<File> Files { get; set; }
+        public DbSet<Text> Texts { get; set; }
     }
 }

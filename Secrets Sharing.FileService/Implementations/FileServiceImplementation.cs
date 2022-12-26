@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Secrets_Sharing.DAL.Interfaces;
 using Secrets_Sharing.Domain.Models;
 using Secrets_Sharing.FileService.Interfaces;
@@ -15,10 +16,12 @@ namespace Secrets_Sharing.FileService.Implementations
     public class FileServiceImplementation : IFileService
     {
         private readonly IResourceRepository _resourceRepository;
+        private readonly IWebHostEnvironment _webHostEnviroment;
 
-        public FileServiceImplementation(IResourceRepository resourceRepository)
+        public FileServiceImplementation(IResourceRepository resourceRepository, IWebHostEnvironment webHostEnvironment)
         {
             _resourceRepository = resourceRepository;
+            _webHostEnviroment = webHostEnvironment;
         }
 
         public Task DeleteFile(string name)
@@ -30,14 +33,14 @@ namespace Secrets_Sharing.FileService.Implementations
         {
             string path = "/Files/" + uploadedFile.FileName;
 
-            using(var fileStream = new FileStream(@"D:\SecretsSharing" + path, FileMode.Create))
+            using(var fileStream = new FileStream(_webHostEnviroment.WebRootPath + path, FileMode.Create))
                 await uploadedFile.CopyToAsync(fileStream);
 
             File file = new File()
             {
                 Name = uploadedFile.FileName,
                 Hash = "123", // TODO: Add hashing
-                Path = @"D:\SecretsSharing" + path,
+                Path = _webHostEnviroment.WebRootPath + path,
                 Type = Domain.Enums.ResourceType.File
             };
 
