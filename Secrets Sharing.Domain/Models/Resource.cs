@@ -11,6 +11,7 @@ namespace Secrets_Sharing.Domain.Models
         public ResourceType Type { get; set; }
         public string Path { get; set; }
 
+        [ForeignKey(nameof(User))]
         public int UserId { get; set; }
         public User User { get; set; }
     }

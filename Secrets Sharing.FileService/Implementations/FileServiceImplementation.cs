@@ -18,12 +18,15 @@ namespace Secrets_Sharing.FileService.Implementations
     {
         private readonly IResourceRepository _resourceRepository;
         private readonly IWebHostEnvironment _webHostEnviroment;
+        private readonly IHasher _hasher;
 
         public FileServiceImplementation(IResourceRepository resourceRepository, 
-            IWebHostEnvironment webHostEnvironment)
+            IWebHostEnvironment webHostEnvironment,
+            IHasher hasher)
         {
             _resourceRepository = resourceRepository;
             _webHostEnviroment = webHostEnvironment;
+            _hasher = hasher;
         }
 
         public Task DeleteFile(string name)
@@ -31,7 +34,7 @@ namespace Secrets_Sharing.FileService.Implementations
             throw new NotImplementedException();
         }
 
-        public async Task LoadFile(IFormFile uploadedFile)
+        public async Task LoadFile(IFormFile uploadedFile, int userId)
         {
             string path = "/Files/" + uploadedFile.FileName;
 
@@ -41,8 +44,10 @@ namespace Secrets_Sharing.FileService.Implementations
             File file = new File()
             {
                 Name = uploadedFile.FileName,
+                Hash = _hasher.GetHash($"{userId}{uploadedFile.FileName}"),
                 Path = _webHostEnviroment.WebRootPath + path,
-                Type = Domain.Enums.ResourceType.File
+                Type = Domain.Enums.ResourceType.File,
+                UserId = userId
             };
 
             await _resourceRepository.Create(file);            

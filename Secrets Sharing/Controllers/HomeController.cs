@@ -33,7 +33,7 @@ namespace Secrets_Sharing.Controllers
         {
             if (uploadedFile != null)
             {
-                await _fileService.LoadFile(uploadedFile);
+                await _fileService.LoadFile(uploadedFile, 1);
             }
 
             return NotFound();

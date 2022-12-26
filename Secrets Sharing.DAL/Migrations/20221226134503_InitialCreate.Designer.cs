@@ -9,7 +9,7 @@ using Secrets_Sharing.DAL;
 namespace Secrets_Sharing.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221226130419_InitialCreate")]
+    [Migration("20221226134503_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

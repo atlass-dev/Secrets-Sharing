@@ -13,12 +13,10 @@ namespace Secrets_Sharing.DAL.Repositories
     public class ResourceRepository : IResourceRepository
     {
         private readonly ApplicationDbContext _context;
-        private readonly IHasher _hasher;
 
-        public ResourceRepository(ApplicationDbContext context, IHasher hasher)
+        public ResourceRepository(ApplicationDbContext context)
         {
             _context = context;
-            _hasher = hasher;
         }
 
         public async Task<bool> Create(Resource entity)
