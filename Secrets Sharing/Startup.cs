@@ -1,9 +1,12 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Secrets_Sharing.Account.Implementations;
+using Secrets_Sharing.Account.Interfaces;
 using Secrets_Sharing.DAL;
 using Secrets_Sharing.DAL.Interfaces;
 using Secrets_Sharing.DAL.Repositories;
@@ -33,10 +36,20 @@ namespace Secrets_Sharing
             services.AddControllersWithViews();
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("Default")));
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
+                    options.AccessDeniedPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
+                });
+
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IResourceRepository, ResourceRepository>();
+
             services.AddScoped<IHasher, MD5Hasher>();
             services.AddScoped<IFileService, FileServiceImplementation>();
+            services.AddScoped<IAccountService, AccountService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,6 +70,7 @@ namespace Secrets_Sharing
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
