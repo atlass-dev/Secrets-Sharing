@@ -14,6 +14,8 @@ using Secrets_Sharing.FileService.Implementations;
 using Secrets_Sharing.FileService.Interfaces;
 using Secrets_Sharing.Hasher.Implementations;
 using Secrets_Sharing.Hasher.Interfaces;
+using Secrets_Sharing.Profile.Implementations;
+using Secrets_Sharing.Profile.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,6 +52,7 @@ namespace Secrets_Sharing
             services.AddScoped<IHasher, MD5Hasher>();
             services.AddScoped<IFileService, FileServiceImplementation>();
             services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IProfileService, ProfileService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

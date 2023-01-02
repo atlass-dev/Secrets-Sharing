@@ -1,0 +1,8 @@
+﻿@model RegisterViewModel
+
+<form asp-action="Register" asp-controller="Account" method="post">
+    <input type="email" asp-for="Email" />
+    <input type="password" asp-for="Password" />
+    <input type="password" asp-for="PasswordConfirm" />
+    <input type="submit" />
+</form>

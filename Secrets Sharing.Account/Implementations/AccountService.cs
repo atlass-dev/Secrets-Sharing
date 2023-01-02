@@ -1,4 +1,5 @@
-﻿using Secrets_Sharing.Account.Interfaces;
+﻿using Microsoft.Extensions.Logging;
+using Secrets_Sharing.Account.Interfaces;
 using Secrets_Sharing.DAL.Interfaces;
 using Secrets_Sharing.Domain.Enums;
 using Secrets_Sharing.Domain.Models;
@@ -19,11 +20,13 @@ namespace Secrets_Sharing.Account.Implementations
     {
         private readonly IUserRepository _userRepository;
         private readonly IHasher _hasher;
+        private readonly ILogger<AccountService> _logger;
 
-        public AccountService(IUserRepository userRepository, IHasher hasher)
+        public AccountService(IUserRepository userRepository, IHasher hasher, ILogger<AccountService> logger)
         {
             _userRepository = userRepository;
             _hasher = hasher;
+            _logger = logger;
         }
 
         public async Task<BaseResponse<ClaimsIdentity>> Login(LoginViewModel model)
@@ -43,6 +46,7 @@ namespace Secrets_Sharing.Account.Implementations
 
                 if (user.Password != _hasher.GetHash(model.Password))
                 {
+                    string pass = _hasher.GetHash(model.Password);
                     return new BaseResponse<ClaimsIdentity>()
                     {
                         Description = "Неверный пароль или логин"

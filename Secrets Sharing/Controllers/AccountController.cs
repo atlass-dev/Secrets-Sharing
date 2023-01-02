@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Secrets_Sharing.Account.Interfaces;
+using Secrets_Sharing.Domain.Models;
 using Secrets_Sharing.Domain.ViewModels;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -40,11 +41,11 @@ namespace Secrets_Sharing.Controllers
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                         new ClaimsPrincipal(response.Data));
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Profile", "Profile");
                 }
                 ModelState.AddModelError("", response.Description);
             }
-            return View(model);
+            return View();
         }
 
         [HttpPost]
@@ -58,11 +59,12 @@ namespace Secrets_Sharing.Controllers
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                         new ClaimsPrincipal(response.Data));
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Profile", "Profile");
                 }
                 ModelState.AddModelError("", response.Description);
             }
-            return View(model);
+            
+            return View();
         }
 
         [ValidateAntiForgeryToken]
