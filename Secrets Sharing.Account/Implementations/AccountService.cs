@@ -37,7 +37,7 @@ namespace Secrets_Sharing.Account.Implementations
                 {
                     return new BaseResponse<ClaimsIdentity>()
                     {
-                        Description = "Пользователь не найден"
+                        Description = "User not found"
                     };
                 }
 
@@ -45,7 +45,7 @@ namespace Secrets_Sharing.Account.Implementations
                 {
                     return new BaseResponse<ClaimsIdentity>()
                     {
-                        Description = "Неверный пароль или логин"
+                        Description = "Wrong email or password"
                     };
                 }
 
@@ -78,7 +78,7 @@ namespace Secrets_Sharing.Account.Implementations
                 {
                     return new BaseResponse<ClaimsIdentity>()
                     {
-                        Description = "Пользователь с таким логином уже есть",
+                        Description = "There`s already user with this email",
                     };
                 }
 
@@ -94,7 +94,7 @@ namespace Secrets_Sharing.Account.Implementations
                 return new BaseResponse<ClaimsIdentity>()
                 {
                     Data = result,
-                    Description = "Объект добавился",
+                    Description = "User registered",
                     StatusCode = StatusCode.OK
                 };
             }
