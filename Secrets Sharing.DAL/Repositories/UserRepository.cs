@@ -36,12 +36,12 @@ namespace Secrets_Sharing.DAL.Repositories
 
         public async Task<User> Get(int id)
         {
-            return await _context.Users.FindAsync(id);
+            return await _context.Users.Include(u => u.Resources).FirstOrDefaultAsync(u => u.Id == id);
         }
 
         public async Task<List<User>> GetAll()
         {
-            return await _context.Users.ToListAsync();
+            return await _context.Users.Include(u => u.Resources).ToListAsync();
         }
     }
 }
