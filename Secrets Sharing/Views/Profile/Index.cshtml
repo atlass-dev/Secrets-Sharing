@@ -1,0 +1,29 @@
+﻿@model User
+
+<h1>@Model.Email</h1>
+
+<button>
+    <a asp-action="LoadFile" asp-asp-controller="Profile">Load file</a>
+</button>
+
+<table class="table">
+    <thead class="thead-primary">
+        <tr>
+            <th>File Name</th>
+            <th>Type</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var file in Model.Resources)
+        {
+            <tr>
+                <td>
+                    <a asp-controller="File" asp-action="Index" asp-route-hash="@file.Hash">@file.Name</a>
+                </td>
+                <td>
+                    @file.Type
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
