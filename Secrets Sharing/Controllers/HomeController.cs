@@ -28,17 +28,6 @@ namespace Secrets_Sharing.Controllers
             return View();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AddFile(IFormFile uploadedFile)
-        {
-            if (uploadedFile != null)
-            {
-                await _fileService.LoadFile(uploadedFile, 1);
-            }
-
-            return NotFound();
-        }
-
         public IActionResult Privacy()
         {
             return View();

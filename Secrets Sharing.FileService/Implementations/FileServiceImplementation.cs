@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Secrets_Sharing.DAL.Interfaces;
+using Secrets_Sharing.Domain.Enums;
 using Secrets_Sharing.Domain.Models;
 using Secrets_Sharing.FileService.Interfaces;
 using Secrets_Sharing.Hasher.Interfaces;
@@ -34,7 +35,17 @@ namespace Secrets_Sharing.FileService.Implementations
             throw new NotImplementedException();
         }
 
-        public async Task LoadFile(IFormFile uploadedFile, int userId)
+        public async Task LoadText(string title, string text, bool autoRemovable)
+        {
+            string path = "/Files/" + title;
+
+            using(StreamWriter sw = new StreamWriter(_webHostEnviroment.WebRootPath + path))
+            {
+                await sw.WriteAsync(text);
+            }
+        }
+
+        public async Task LoadFile(IFormFile uploadedFile, int userId, bool autoRemovable)
         {
             string path = "/Files/" + uploadedFile.FileName;
 
@@ -46,7 +57,8 @@ namespace Secrets_Sharing.FileService.Implementations
                 Name = uploadedFile.FileName,
                 Hash = _hasher.GetHash($"{userId}{uploadedFile.FileName}"),
                 Path = _webHostEnviroment.WebRootPath + path,
-                Type = Domain.Enums.ResourceType.File,
+                Type = ResourceType.File,
+                AutoRemoveable = autoRemovable,
                 UserId = userId
             };
 

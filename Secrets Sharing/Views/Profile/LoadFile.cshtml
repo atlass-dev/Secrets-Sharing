@@ -1,0 +1,8 @@
+﻿@model Resource
+
+<form asp-action="LoadFile" asp-controller="Profile" method="post" enctype="multipart/form-data">
+    <input type="file" name="uploadedFile" /><br>
+    <label>Delete after opening?</label>
+    <input type="checkbox" name="autoRemovable" value="true"/><br>
+    <input type="submit" value="Загрузить" />
+</form>
