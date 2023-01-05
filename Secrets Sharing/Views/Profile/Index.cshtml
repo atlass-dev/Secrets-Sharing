@@ -23,7 +23,15 @@
         {
             <tr>
                 <td>
-                    <a asp-controller="File" asp-action="Index" asp-route-hash="@file.Hash">@file.Name</a>
+                    @if (file.Type == Secrets_Sharing.Domain.Enums.ResourceType.File)
+                    {
+                        <a asp-controller="File" asp-action="FileLoad" asp-route-hash="@file.Hash">@file.Name</a>
+                    }
+                    else
+                    {
+                        <a asp-controller="File" asp-action="TextIndex" asp-route-hash="@file.Hash">@file.Name</a>
+                    }
+
                 </td>
                 <td>
                     @file.Type

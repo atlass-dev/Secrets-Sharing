@@ -41,7 +41,7 @@ namespace Secrets_Sharing.FileService.Implementations
 
                 if (file is File)
                 {
-                    FileInfo fileInfo = new FileInfo(_webHostEnviroment.WebRootPath + $"/Files/{file.Name}");
+                    FileInfo fileInfo = new FileInfo(_webHostEnviroment.WebRootPath + $@"\Files\{file.Name}");
 
                     if (fileInfo != null)
                         fileInfo.Delete();
@@ -50,19 +50,9 @@ namespace Secrets_Sharing.FileService.Implementations
                 
         }
 
-        public async Task LoadText(string title, string text, bool autoRemovable)
-        {
-            string path = "/Files/" + title;
-
-            using(StreamWriter sw = new StreamWriter(_webHostEnviroment.WebRootPath + path))
-            {
-                await sw.WriteAsync(text);
-            }
-        }
-
         public async Task LoadFile(IFormFile uploadedFile, int userId, bool autoRemovable)
         {
-            string path = "/Files/" + uploadedFile.FileName;
+            string path = @"\Files\" + uploadedFile.FileName;
 
             using(var fileStream = new FileStream(_webHostEnviroment.WebRootPath + path, FileMode.Create))
                 await uploadedFile.CopyToAsync(fileStream);
