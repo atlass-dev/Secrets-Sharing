@@ -41,6 +41,12 @@ namespace Secrets_Sharing.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult LoadText() 
+        {
+            return View();
+        }
+
         [HttpPost]
         public async Task<IActionResult> LoadFile(IFormFile uploadedFile, bool autoRemovable)
         {
@@ -49,6 +55,18 @@ namespace Secrets_Sharing.Controllers
             var user = users.FirstOrDefault(u => u.Email == email);
 
             await _fileService.LoadFile(uploadedFile, user.Id, autoRemovable);
+
+            return RedirectToAction("Index", "Profile");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> LoadText(Text file)
+        {
+            var email = User.Identity.Name;
+            var users = await _userRepository.GetAll();
+            var user = users.FirstOrDefault(u => u.Email == email);
+
+            await _fileService.LoadFile(file, user.Id);
 
             return RedirectToAction("Index", "Profile");
         }

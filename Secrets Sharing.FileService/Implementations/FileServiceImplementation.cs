@@ -64,5 +64,14 @@ namespace Secrets_Sharing.FileService.Implementations
 
             await _resourceRepository.Create(file);            
         }
+
+        public async Task LoadFile(Text text, int userId)
+        {
+            text.Hash = _hasher.GetHash($"{userId}{text.Name}");
+            text.Type = ResourceType.Text;
+            text.UserId = userId;
+
+            await _resourceRepository.Create(text);
+        }
     }
 }
