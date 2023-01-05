@@ -30,9 +30,24 @@ namespace Secrets_Sharing.FileService.Implementations
             _hasher = hasher;
         }
 
-        public Task DeleteFile(string name)
+        public async Task DeleteFile(string hash)
         {
-            throw new NotImplementedException();
+            var files = await _resourceRepository.GetAll();
+            var file = files.FirstOrDefault(f => f.Hash == hash);
+
+            if (file != null)
+            {
+                await _resourceRepository.Delete(file);
+
+                if (file is File)
+                {
+                    FileInfo fileInfo = new FileInfo(_webHostEnviroment.WebRootPath + $"/Files/{file.Name}");
+
+                    if (fileInfo != null)
+                        fileInfo.Delete();
+                }
+            }
+                
         }
 
         public async Task LoadText(string title, string text, bool autoRemovable)

@@ -12,6 +12,6 @@ namespace Secrets_Sharing.FileService.Interfaces
     {
         public Task LoadFile(IFormFile uploadedFile, int userId, bool autoRemovable);
         public Task LoadFile(Text text, int userId);
-        public Task DeleteFile(string name);
+        public Task DeleteFile(string hash);
     }
 }

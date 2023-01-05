@@ -70,5 +70,13 @@ namespace Secrets_Sharing.Controllers
 
             return RedirectToAction("Index", "Profile");
         }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteFile(string hash)
+        {
+            await _fileService.DeleteFile(hash);
+
+            return RedirectToAction("Index", "Profile");
+        }
     }
 }
