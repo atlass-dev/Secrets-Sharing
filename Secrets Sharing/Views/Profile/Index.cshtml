@@ -31,17 +31,39 @@
                     {
                         <a asp-controller="File" asp-action="DownloadText" asp-route-hash="@file.Hash">@file.Name</a>
                     }
-
                 </td>
                 <td>
                     @file.Type
+                </td>
+                <td>
+                    @if (file.Type == Secrets_Sharing.Domain.Enums.ResourceType.File)
+                    {
+                        <a onMouseOver="this.style.color='#00F';
+                        this.style.cursor='pointer'" 
+                        onMouseOut="this.style.color='#000'" 
+                        onclick="copyLink('https://localhost:44348/File/DownloadFile?hash=@file.Hash')">Copy link</a>
+                    }
+                    else
+                    {
+                        <a onMouseOver="this.style.color='#00F';
+                        this.style.cursor='pointer'" 
+                        onMouseOut="this.style.color='#000'" 
+                        onclick="copyLink('https://localhost:44348/File/DownloadText?hash=@file.Hash')">Copy link</a>
+                    }
                 </td>
                 <td>
                     <form asp-action="DeleteFile" asp-controller="Profile" asp-route-hash="@file.Hash">
                         <input type="submit" value="Delete" class="btn-primary btn-danger">
                     </form>
                 </td>
+                
             </tr>
         }
     </tbody>
 </table>
+
+<script>
+    function copyLink(link){
+        navigator.clipboard.writeText(link);
+    }
+</script>
