@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Secrets_Sharing.DAL.Interfaces;
+using Secrets_Sharing.Domain.Models;
 using Secrets_Sharing.FileService.Interfaces;
 using System.IO;
 using System.Threading.Tasks;
@@ -18,7 +19,7 @@ namespace Secrets_Sharing.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> FileLoad(string hash)
+        public async Task<IActionResult> DownloadFile(string hash)
         {
             var files = await _resourceRepository.GetAll();
             var file = files.Find(x => x.Hash == hash);
@@ -32,13 +33,25 @@ namespace Secrets_Sharing.Controllers
 
                 return downloadedFile;
             }
-            return RedirectToAction("Index", "Home");
+
+            return NotFound();
         }
 
         [HttpGet]
-        public IActionResult TextLoad(string hash) 
+        public async Task<IActionResult> DownloadText(string hash) 
         {
-            return View();
+            var files = await _resourceRepository.GetAll();
+            var text = files.Find(t => t.Hash == hash) as Text;
+
+            if (text != null)
+            {
+                if (text.AutoRemoveable)
+                    await _resourceRepository.Delete(text);
+
+                return View(text);
+            }
+
+            return NotFound();
         }
     }
 }

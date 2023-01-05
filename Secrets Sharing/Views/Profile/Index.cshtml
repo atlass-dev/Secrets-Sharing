@@ -25,11 +25,11 @@
                 <td>
                     @if (file.Type == Secrets_Sharing.Domain.Enums.ResourceType.File)
                     {
-                        <a asp-controller="File" asp-action="FileLoad" asp-route-hash="@file.Hash">@file.Name</a>
+                        <a asp-controller="File" asp-action="DownloadFile" asp-route-hash="@file.Hash">@file.Name</a>
                     }
                     else
                     {
-                        <a asp-controller="File" asp-action="TextIndex" asp-route-hash="@file.Hash">@file.Name</a>
+                        <a asp-controller="File" asp-action="DownloadText" asp-route-hash="@file.Hash">@file.Name</a>
                     }
 
                 </td>
