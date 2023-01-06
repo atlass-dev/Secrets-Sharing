@@ -1,11 +1,25 @@
 ﻿@model Text
 
 <form asp-action="LoadText" asp-controller="Profile" method="post">
-    <label>Headline: </label>
-    <input type="text" asp-for="Name" /><br />
-    <label>Text: </label>
-    <input type="text" asp-for="Value" /><br />
-    <label>Delete after opening?</label>
-    <input type="checkbox" value="true" asp-for="AutoRemoveable" /><br />
-    <input type="submit" value="Load text"/>
+    <div class="form-group">
+        <label>Headline: </label>
+        <input type="text" asp-for="Name" />
+    </div>
+    
+    <div class="form-group">
+        <label>Text: </label>
+        <input type="text" asp-for="Value" />
+    </div>
+    
+    <div class="form-group">
+        <label>Delete after opening?</label>
+        <input type="checkbox" value="true" asp-for="AutoRemoveable" />
+    </div>
+    
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary" value="Load text">
+            Load text
+        </button>
+    </div>
+    
 </form>
