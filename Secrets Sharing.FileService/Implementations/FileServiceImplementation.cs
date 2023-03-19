@@ -57,6 +57,8 @@ namespace Secrets_Sharing.FileService.Implementations
             using(var fileStream = new FileStream(_webHostEnviroment.WebRootPath + path, FileMode.Create))
                 await uploadedFile.CopyToAsync(fileStream);
 
+            //
+
             File file = new File()
             {
                 Name = uploadedFile.FileName,
