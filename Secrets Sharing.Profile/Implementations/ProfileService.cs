@@ -24,6 +24,11 @@ namespace Secrets_Sharing.Profile.Implementations
             _userRepository = userRepository;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
         public async Task<BaseResponse<User>> GetProfile(string email)
         {
             var users = await _userRepository.GetAll();
