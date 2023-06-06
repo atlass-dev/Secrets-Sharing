@@ -15,6 +15,10 @@ namespace Secrets_Sharing.Profile.Implementations
     {
         private readonly IUserRepository _userRepository;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userRepository"></param>
         public ProfileService(IUserRepository userRepository)
         {
             _userRepository = userRepository;
